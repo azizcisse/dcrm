@@ -1,13 +1,32 @@
 {% extends "base.html" %}
 
-
-
 {% block content %}
     
-<h1 class="text-center alert alert-primary">Interface d'Inscription</h1>
+<div class="col-md-6 offset-md-3">
+    <h1 class="text-center alert alert-primary">Interface d'Inscription</h1>
+<br/>
 
+<form method="POST" action="">
+	{% csrf_token %}
+	{% if form.errors %}
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Votre formulaire contient des erreurs
+			  {% for field in form %}
+			  	{% if field.errors %}
+			  		{{ field.errors }}
+			  	{% endif %}
+			  {% endfor %}
+			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
+		{% endif %}
 
+	{{ form.as_p }}
 
+	<br/>
+	  <button type="submit" class="btn btn-primary">S'Inscrire</button>
+      <a class="btn btn-danger" href="{% url 'home' %}">Annuler</a>
+	</form>
+
+</div>
 
 {% endblock content %}
-    
