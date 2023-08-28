@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+  
+<div class="col-md-6 offset-md-3">
+    {% if user.is_authenticated %}
+
+    <h1 class="text-center alert alert-success">Salam, CRM-DJANGO!</h1>
+      {% else %}
+ 
+    <h1 class="text-center alert alert-primary">Interface de Connexion</h1>
+    <br/>
+    <form action="{% url 'home' %}" method="POST">
+        {% csrf_token %}
+        <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" name="username" placeholder="Nom d'Utilisateur" required>            
+            </div><br/>
+            <div class="mb-3">
+              <input type="password" class="form-control" name="password" placeholder="Mot de Passe" required>
+            </div>
+            <br/>
+            <button type="submit" class="btn btn-success">Se Connecter</button>
+            <button type="reset" class="btn btn-danger"><a href="{% url 'home' %}">Annuler</a></button>
+          </form>
+    </form>
+    {% endif %}
+</div>
+
+
+
+{% endblock content %}
