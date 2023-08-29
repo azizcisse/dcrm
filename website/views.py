@@ -2,9 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from website.forms import SignUpForm
+from .models import Record
+
+
 
 
 def home(request):
+    records = Record.objects.all()
     #Vérification pour voir si tu es connecté
     if request.method == "POST":
         username = request.POST['username']
@@ -19,7 +23,7 @@ def home(request):
             messages.success(request, "Une erreur s'est produite lors de la connexion, veuillez réessayer...")
             return redirect('home')
     else:
-        return render(request, 'home.html', {})
+        return render(request, 'home.html', {'records':records})
 
 
 
@@ -46,3 +50,8 @@ def register_user(request):
          form = SignUpForm()           
          return render(request, 'register.html', {'form':form})
     return render(request, 'register.html', {'form':form})
+
+
+
+def customer_record(request, pk):
+    pass
