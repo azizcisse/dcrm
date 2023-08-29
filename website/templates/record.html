@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container w-50">
+<h1 class="text-center alert alert-primary">Détails de l'Enregistrement:</h1>
+    <div class="card">
+        <div class="card-header">
+            {{ customer_record.first_name }}
+            {{ customer_record.last_name }}
+        </div>
+        <div class="card-body">
+            <h5 class="card-text"><strong>Email:</strong> {{ customer_record.email }} </h5>
+
+            <h5 class="card-text"><strong>Téléphone:</strong> {{ customer_record.phone }} </h5>
+
+            <h5 class="card-text"><strong>Adresse:</strong> {{ customer_record.address }}</h5>
+
+            <h5 class="card-text"><strong>Ville:</strong> {{ customer_record.city }}</h5>
+
+            <h5 class="card-text"><strong>Pays:</strong> {{ customer_record.state }}</h5>
+
+            <h5 class="card-text"><strong>Code Zippé:</strong> {{ customer_record.zipcode }}</h5>
+
+            <h5 class="card-text"><strong>Date de Création:</strong> {{ customer_record.created_at }}</h5>
+
+            <h5 class="card-text"><strong>Identification:</strong> {{ customer_record.id }} </h5>
+        </div>
+    </div>
+    <br/><br/>
+
+    <a href="{% url 'home' %}" class="btn btn-secondary">Accueil</a>
+    <a href="{% url 'delete_record' customer_record.id %}" class="btn btn-danger">Supprimer</a>
+
+    <a href="{% url 'update_record' customer_record.id %}" class="btn btn-warning">Modifier</a>
+</div>
+
+
+
+
+
+
+
+
+{% endblock content %}

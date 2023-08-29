@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from website.forms import SignUpForm
+from website.forms import SignUpForm, AddRecordForm
 from .models import Record
 
 
@@ -54,4 +54,51 @@ def register_user(request):
 
 
 def customer_record(request, pk):
-    pass
+    if request.user.is_authenticated:
+        #Rechercher des enregistrements
+        customer_record =Record.objects.get(id=pk)
+        return render(request, 'record.html', {'customer_record':customer_record})
+    else:
+        messages.success(request, "Vous devez vous connecter pour acceder sur cette page...")
+        return redirect('home')
+    
+    
+    
+def delete_record(request, pk):
+    if request.user.is_authenticated:
+        delete_it = Record.objects.get(id=pk)
+        delete_it.delete()
+        messages.success(request, "L'enregistrement a été supprimé avec Succès!!!")
+        return redirect('home')
+    else:
+        messages.success(request, "Vous devez vous connecter pour pouvoir effecture cette action...")
+        return redirect('home')
+    
+    
+    
+def add_record(request):
+    form = AddRecordForm(request.POST or None)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            if form.is_valid():
+                add_record = form.save()
+                messages.success(request, "Le Formulaire a été soumis avec Succès!!!")
+                return redirect('home')
+        return render(request, 'add_record.html', {'form':form})
+    else:
+        messages.success(request, "Vous devez vous connecter....")
+        return redirect('home')
+    
+    
+def update_record(request, pk):
+    if request.user.is_authenticated:
+        current_record = Record.objects.get(id=pk)
+        form = AddRecordForm(request.POST or None, instance=current_record)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "L'Enregistrement a été modifié avec Succès..")
+            return redirect('home')
+        return render(request, 'update_record.html', {'form':form})
+    else:
+        messages.success(request, "Vous devez vous connecter pour mettre à jours les informations....")
+        return redirect('home')

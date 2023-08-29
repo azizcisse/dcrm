@@ -33,7 +33,7 @@
             <th> {{ record.state }}</th>
             <th>{{ record.zipcode }}</th>
             <th>{{ record.created_at }}</th>
-            <th>{{ record.id }}</th>
+            <th><a href="{% url 'record' record.id %}">{{ record.id }}</a></th>
           </tr>
           {% endfor %}      
           {% endif %} 
@@ -41,6 +41,7 @@
       </table>
      
       {% else %}
+      <div class="col-md-6 offset-md-3">
     <h1 class="text-center alert alert-primary">Interface de Connexion</h1>
     <br/>
     <form action="{% url 'home' %}" method="POST">
@@ -57,9 +58,8 @@
            <a class="btn btn-danger" href="{% url 'home' %}">Annuler</a>
           </form>
     </form>
-    {% endif %}
-
-
-
+   
+  </div>
+  {% endif %}
 
 {% endblock content %}
